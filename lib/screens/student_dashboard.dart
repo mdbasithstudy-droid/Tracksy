@@ -1,14 +1,12 @@
-import 'package:bus_management_app/screens/student_request.dart';
-import 'package:bus_management_app/screens/tracker_bus.dart';
+import 'package:bus_management_app/models/bus_data.dart';
 import 'package:flutter/material.dart';
-import '../models/bus_data.dart';
 import 'tracker_bus.dart';
-import 'student_request.dart'; // your request page
+import 'student_request.dart';
 
 class StudentDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    int busesRunning = BusData().buses.length; // Count of buses logged in
+    final busesCount = BusData().buses.length; // dynamic count
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -16,57 +14,81 @@ class StudentDashboard extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Number of buses running
-            Card(
-              color: Colors.grey[900],
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(
-                  'Buses Running: $busesRunning',
-                  style: TextStyle(
-                    color: Colors.cyanAccent,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+            // Number of running buses
+            Text(
+              'Running Buses: $busesCount',
+              style: TextStyle(fontSize: 20, color: Colors.cyanAccent),
+            ),
+            SizedBox(height: 20),
+
+            // Buttons Row
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => StudentRequestsPage()));
+                  },
+                  child: Text('Request'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.cyanAccent,
+                    foregroundColor: Colors.black,
                   ),
-                  textAlign: TextAlign.center,
                 ),
-              ),
-            ),
-            SizedBox(height: 20),
-
-            // Track button
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => TrackBusesPage()),
-                );
-              },
-              child: Text('Track Buses'),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                textStyle: TextStyle(fontSize: 18),
-              ),
-            ),
-            SizedBox(height: 20),
-
-            // Request button
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => StudentRequestsPage()),
-                );
-              },
-              child: Text('Send Request'),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                textStyle: TextStyle(fontSize: 18),
-              ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => TrackBusesPage()));
+                  },
+                  child: Text('Track'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.cyanAccent,
+                    foregroundColor: Colors.black,
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ParkingLayoutPage()));
+                  },
+                  child: Text('Parking Layout'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.cyanAccent,
+                    foregroundColor: Colors.black,
+                  ),
+                ),
+              ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+// ------------------ Parking Layout Page with Image ------------------
+class ParkingLayoutPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: Text('Parking Layout'),
+        backgroundColor: Colors.cyanAccent,
+      ),
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Image.asset(
+            'assets/parking_layout.png', // <-- put your image here
+            fit: BoxFit.contain,
+          ),
         ),
       ),
     );
