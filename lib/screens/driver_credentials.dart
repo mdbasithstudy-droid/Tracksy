@@ -54,11 +54,22 @@ class DriverCredentials extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                int busNumber = int.tryParse(busController.text) ?? 0;
-                BusData().addBus(nameController.text, routeController.text, busNumber);
+                String driverName = nameController.text;
+                String busNumber = busController.text; 
+                String route = routeController.text;
+
+                // Store bus globally
+                BusData().addBus(driverName, route, busNumber);
+
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => DriverDashboard(busIndex: BusData().buses.length - 1)),
+                  MaterialPageRoute(
+                    builder: (_) => DriverDashboard(
+                      driverName: driverName,
+                      busNumber: busNumber,
+                      route: route,
+                    ),
+                  ),
                 );
               },
               child: Text('Confirm'),

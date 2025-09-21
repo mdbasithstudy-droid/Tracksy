@@ -1,7 +1,7 @@
 class Bus {
   String name;
   String route;
-  int busNumber;
+  String busNumber; // Alphanumeric
   int seats;
 
   Bus({
@@ -19,22 +19,33 @@ class BusData {
 
   final List<Bus> buses = [];
 
-  void addBus(String name, String route, int busNumber) {
+  void addBus(String name, String route, String busNumber) {
     buses.add(Bus(name: name, route: route, busNumber: busNumber));
   }
 
-  void incrementSeats(int index) => buses[index].seats++;
-  void decrementSeats(int index) {
-    if (buses[index].seats > 0) buses[index].seats--;
+  void incrementSeats(String busNumber) {
+    final bus = buses.firstWhere((b) => b.busNumber == busNumber);
+    bus.seats++;
+  }
+
+  void decrementSeats(String busNumber) {
+    final bus = buses.firstWhere((b) => b.busNumber == busNumber);
+    if (bus.seats > 0) bus.seats--;
   }
 }
+
+// ---------------------- Student Requests ----------------------
 
 class StudentRequest {
   String studentName;
   String boardingPoint;
   bool accepted;
 
-  StudentRequest({required this.studentName, required this.boardingPoint, this.accepted = false});
+  StudentRequest({
+    required this.studentName,
+    required this.boardingPoint,
+    this.accepted = false,
+  });
 }
 
 class RequestData {
@@ -45,5 +56,6 @@ class RequestData {
   final List<StudentRequest> requests = [];
 
   void addRequest(StudentRequest request) => requests.add(request);
+
   void acceptRequest(int index) => requests[index].accepted = true;
 }

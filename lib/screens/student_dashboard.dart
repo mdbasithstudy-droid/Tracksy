@@ -1,62 +1,70 @@
+import 'package:bus_management_app/screens/student_request.dart';
+import 'package:bus_management_app/screens/tracker_bus.dart';
 import 'package:flutter/material.dart';
-import 'student_request.dart'; // screen version
-import 'student_tracker.dart';
-import 'parking_layout.dart';
-import '../models/bus_data.dart' as busData; // alias the model import
+import '../models/bus_data.dart';
+import 'tracker_bus.dart';
+import 'student_request.dart'; // your request page
 
 class StudentDashboard extends StatelessWidget {
-  final int busesRunning = 5; // Example data
-
   @override
   Widget build(BuildContext context) {
+    int busesRunning = BusData().buses.length; // Count of buses logged in
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Student Dashboard'),
-        backgroundColor: Colors.cyanAccent,
-      ),
+      backgroundColor: Colors.black,
+      appBar: AppBar(title: Text('Student Dashboard')),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              height: 100,
-              color: Colors.black,
-              child: Center(
+            // Number of buses running
+            Card(
+              color: Colors.grey[900],
+              child: Padding(
+                padding: EdgeInsets.all(16),
                 child: Text(
                   'Buses Running: $busesRunning',
-                  style: TextStyle(fontSize: 22, color: Colors.cyanAccent),
+                  style: TextStyle(
+                    color: Colors.cyanAccent,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
             SizedBox(height: 20),
+
+            // Track button
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => StudentRequest()), // screen
+                  MaterialPageRoute(builder: (_) => TrackBusesPage()),
                 );
               },
-              child: Text('Request'),
+              child: Text('Track Buses'),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                textStyle: TextStyle(fontSize: 18),
+              ),
             ),
             SizedBox(height: 20),
+
+            // Request button
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => StudentTracker()),
+                  MaterialPageRoute(builder: (_) => StudentRequestsPage()),
                 );
               },
-              child: Text('Tracker'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => ParkingLayout()),
-                );
-              },
-              child: Text('Parking Layout'),
+              child: Text('Send Request'),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                textStyle: TextStyle(fontSize: 18),
+              ),
             ),
           ],
         ),

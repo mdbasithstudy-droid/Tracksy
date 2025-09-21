@@ -48,7 +48,7 @@ class HomeSelection extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Welcome to Bus Management',
+                'Tracksy',
                 style: TextStyle(fontSize: 24, color: Colors.cyanAccent),
               ),
               SizedBox(height: 40),

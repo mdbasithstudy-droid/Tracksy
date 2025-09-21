@@ -17,22 +17,31 @@ class _DriverRequestsState extends State<DriverRequests> {
       body: ListView.builder(
         itemCount: requests.length,
         itemBuilder: (context, index) {
-          final r = requests[index];
+          final request = requests[index];
           return Card(
             color: Colors.grey[900],
             child: ListTile(
-              title: Text(r.studentName, style: TextStyle(color: Colors.cyanAccent)),
-              subtitle: Text('Boarding: ${r.boardingPoint}', style: TextStyle(color: Colors.cyanAccent)),
-              trailing: r.accepted
-                  ? Icon(Icons.check, color: Colors.cyanAccent)
+              title: Text(
+                request.studentName,
+                style: TextStyle(color: Colors.cyanAccent),
+              ),
+              subtitle: Text(
+                'Boarding: ${request.boardingPoint}',
+                style: TextStyle(color: Colors.cyanAccent),
+              ),
+              trailing: request.accepted
+                  ? Icon(Icons.check, color: Colors.green)
                   : ElevatedButton(
-                      child: Text('Accept'),
                       onPressed: () {
                         setState(() {
                           RequestData().acceptRequest(index);
                         });
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${r.studentName} Accepted!")));
                       },
+                      child: Text('Accept'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.cyanAccent,
+                        foregroundColor: Colors.black,
+                      ),
                     ),
             ),
           );
